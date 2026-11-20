@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hito Hito no Mi: Modelo Nika</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            user-select: none;
+        }
+
+        body {
+            background-color: #050505;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            transition: background 0.15s ease-out;
+            position: relative;
+        }
+
+        /* Resplandor ambiental detrás de la fruta */
+        #aura {
+            position: absolute;
+            width: 320px;
+            height: 320px;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(168, 85, 247, 0.25) 0%, rgba(0,0,0,0) 70%);
+            pointer-events: none;
+            transition: transform 0.15s ease-out, background 0.2s ease;
+            z-index: 1;
+        }
+
+        /* Contenedor de la Fruta del Diablo */
+        #fruit-container {
+            position: relative;
+            z-index: 10;
+            cursor: pointer;
+            transition: transform 0.1s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            filter: drop-shadow(0 0 20px rgba(155, 81, 224, 0.5));
+        }
+
+        #fruit-container:active {
+            transform: scale(0.9);
+        }
+
+        /* Animación de pulso al despertar (Gear 5) */
+        .awakened-pulse {
+            animation: gear5Bounce 0.45s infinite alternate ease-in-out;
+        }
+
+        @keyframes gear5Bounce {
+            0% { transform: scale(1) rotate(-3deg); }
+            100% { transform: scale(1.12) rotate(3deg); }
+        }
+
+        /* Ondas expansivas (Haki / Ritmo) */
+        .shockwave {
+            position: absolute;
+            border-radius: 50%;
+            border: 3px solid rgba(255, 255, 255, 0.8);
+            pointer-events: none;
+            z-index: 5;
+            animation: expandWave 0.8s ease-out forwards;
+        }
+
+        @keyframes expandWave {
+            0% {
+                width: 160px;
+                height: 160px;
+                opacity: 1;
+                border-width: 6px;
+            }
+            100% {
+                width: 650px;
+                height: 650px;
+                opacity: 0;
+                border-width: 1px;
+            }
+        }
+
+        /* Indicador discreto de progreso */
+        #status-text {
+            position: absolute;
+            bottom: 40px;
+            color: rgba(255, 255, 255, 0.4);
+            font-size: 1rem;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            z-index: 10;
+            transition: all 0.3s ease;
+            text-align: center;
+            padding: 0 20px;
+        }
+
+        .liberated-text {
+            color: #ffffff !important;
+            text-shadow: 0 0 15px #fff, 0 0 30px #e879f9;
+            font-weight: bold;
+            letter-spacing: 5px !important;
+        }
+    </style>
+</head>
+<body>
+
+    <div id="aura"></div>
+
+    <!-- Ilustración SVG de la Hito Hito no Mi, Modelo: Nika -->
+    <div id="fruit-container" title="Toca la fruta...">
+        <svg width="200" height="230" viewBox="0 0 200 230" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+                <!-- Gradiente morado característico -->
+                <radialGradient id="nikaGrad" cx="35%" cy="35%" r="65%">
+                    <stop offset="0%" stop-color="#d8b4fe"/>
+                    <stop offset="45%" stop-color="#9333ea"/>
+                    <stop offset="100%" stop-color="#4c1d95"/>
+                </radialGradient>
+                <!-- Gradiente blanco brillante para el modo Gear 5 -->
+                <radialGradient id="gear5Grad" cx="40%" cy="40%" r="60%">
+                    <stop offset="0%" stop-color="#ffffff"/>
+                    <stop offset="60%" stop-color="#f3e8ff"/>
+                    <stop offset="100%" stop-color="#c084fc"/>
+                </radialGradient>
+            </defs>
+
+            <!-- Tallo en espiral -->
+            <path d="M 100 58 C 100 35, 118 20, 130 28 C 140 35, 128 48, 122 42" 
+                  fill="none" stroke="#a855f7" stroke-width="8" stroke-linecap="round"/>
+            <path d="M 96 58 L 104 58 L 102 45 L 98 45 Z" fill="#7e22ce"/>
+
+            <!-- Cuerpo esférico de la fruta -->
+            <circle id="fruit-body" cx="100" cy="135" r="78" fill="url(#nikaGrad)" stroke="#3b0764" stroke-width="3"/>
+
+            <!-- Espirales clásicas de Fruta del Diablo -->
+            <g fill="none" stroke="#3b0764" stroke-width="4.5" stroke-linecap="round" opacity="0.85">
+                <!-- Espiral Central -->
+                <path d="M 100 135 C 105 130, 112 135, 108 143 C 102 152, 88 148, 87 136 C 86 120, 105 112, 118 122 C 132 133, 126 158, 107 163"/>
+                <!-- Espiral Izquierda -->
+                <path d="M 55 120 C 58 116, 64 120, 61 126 C 56 133, 45 130, 45 120 C 45 107, 60 101, 70 110"/>
+                <!-- Espiral Derecha -->
+                <path d="M 145 125 C 148 121, 154 125, 151 131 C 146 138, 135 135, 135 125 C 135 112, 150 106, 160 115"/>
+                <!-- Espiral Inferior -->
+                <path d="M 95 182 C 98 179, 103 182, 100 187 C 96 193, 86 190, 86 182 C 86 172, 99 167, 107 174"/>
+                <!-- Espiral Superior -->
+                <path d="M 98 85 C 101 82, 106 85, 103 90 C 99 96, 89 93, 89 85 C 89 75, 102 70, 110 77"/>
+            </g>
+
+            <!-- Brillo especular -->
+            <ellipse cx="72" cy="95" rx="14" ry="7" transform="rotate(-30 72 95)" fill="rgba(255,255,255,0.35)"/>
+        </svg>
+    </div>
+
+    <div id="status-text">Toca la fruta (0 / 5)</div>
+
+    <script>
+        const fruitContainer = document.getElementById('fruit-container');
+        const fruitBody = document.getElementById('fruit-body');
+        const aura = document.getElementById('aura');
+        const statusText = document.getElementById('status-text');
+        const body = document.body;
+
+        let clickCount = 0;
+        let isLiberated = false;
+        let audioCtx = null;
+        let drumLoopTimer = null;
+
+        // Paleta de colores vibrantes inspirados en Gear 5 / Nika
+        const nikaColors = [
+            { bg: '#1a0526', glow: '#a855f7' }, // Morado Nika
+            { bg: '#26081c', glow: '#ec4899' }, // Rosa Haki
+            { bg: '#241804', glow: '#f59e0b' }, // Dorado Amanecer
+            { bg: '#061d26', glow: '#38bdf8' }, // Azul Cielo
+            { bg: '#1e1b2e', glow: '#ffffff' }  // Blanco Liberación
+        ];
+
+        // Inicializar sintetizador de audio (Web Audio API)
+        function initAudio() {
+            if (!audioCtx) {
+                audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+            }
+            if (audioCtx.state === 'suspended') {
+                audioCtx.resume();
+            }
+        }
+
+        // Sintetizador de golpe de tambor profundo (Taiko / Tambores de la Liberación)
+        function playDrumHit(pitch = 110, duration = 0.25, volume = 0.8) {
+            initAudio();
+            const now = audioCtx.currentTime;
+
+            // Oscilador principal (cuerpo del tambor)
+            const osc = audioCtx.createOscillator();
+            const gain = audioCtx.createGain();
+            osc.type = 'sine';
+            osc.frequency.setValueAtTime(pitch, now);
+            osc.frequency.exponentialRampToValueAtTime(32, now + duration);
+
+            gain.gain.setValueAtTime(volume, now);
+            gain.gain.exponentialRampToValueAtTime(0.01, now + duration);
+
+            osc.connect(gain);
+            gain.connect(audioCtx.destination);
+
+            osc.start(now);
+            osc.stop(now + duration);
+
+            // Golpe agudo del parche (ataque)
+            const clickOsc = audioCtx.createOscillator();
+            const clickGain = audioCtx.createGain();
+            clickOsc.type = 'triangle';
+            clickOsc.frequency.setValueAtTime(pitch * 2.2, now);
+            clickOsc.frequency.exponentialRampToValueAtTime(50, now + 0.06);
+
+            clickGain.gain.setValueAtTime(volume * 0.5, now);
+            clickGain.gain.exponentialRampToValueAtTime(0.01, now + 0.06);
+
+            clickOsc.connect(clickGain);
+            clickGain.connect(audioCtx.destination);
+
+            clickOsc.start(now);
+            clickOsc.stop(now + 0.06);
+        }
+
+        // Crear onda expansiva visual
+        function triggerVisualPulse(colorObj, intensity = 1) {
+            // Cambiar fondo y aura
+            body.style.background = `radial-gradient(circle at center, ${colorObj.bg} 0%, #050505 85%)`;
+            aura.style.background = `radial-gradient(circle, ${colorObj.glow}66 0%, rgba(0,0,0,0) 70%)`;
+            aura.style.transform = `scale(${1 + intensity * 0.4})`;
+            fruitContainer.style.filter = `drop-shadow(0 0 ${25 * intensity}px ${colorObj.glow})`;
+
+            // Onda de choque
+            const wave = document.createElement('div');
+            wave.classList.add('shockwave');
+            wave.style.borderColor = colorObj.glow;
+            body.appendChild(wave);
+
+            setTimeout(() => wave.remove(), 800);
+
+            // Volver suavemente al negro profundo si aún no está en modo continuo
+            if (!isLiberated) {
+                setTimeout(() => {
+                    body.style.background = '#050505';
+                    aura.style.transform = 'scale(1)';
+                }, 300);
+            }
+        }
+
+        // Secuencia completa: "Tambores de la Liberación" (¡DUM-dududum-DUM!)
+        function startDrumsOfLiberation() {
+            isLiberated = true;
+            fruitBody.setAttribute('fill', 'url(#gear5Grad)');
+            fruitContainer.classList.add('awakened-pulse');
+            statusText.textContent = "♫ ¡LOS TAMBORES DE LA LIBERACIÓN! ♫";
+            statusText.classList.add('liberated-text');
+
+            // Patrón rítmico exacto en milisegundos:
+            // Tiempo 0: DUM (fuerte)
+            // Tiempo 260ms: du (suave)
+            // Tiempo 390ms: du (suave)
+            // Tiempo 520ms: dum (medio)
+            // Tiempo 720ms: DUM (muy fuerte)
+            // Ciclo total: 1250ms
+            const pattern = [
+                { time: 0,    pitch: 125, vol: 0.95, intensity: 1.5 },
+                { time: 260,  pitch: 95,  vol: 0.45, intensity: 0.8 },
+                { time: 390,  pitch: 100, vol: 0.50, intensity: 0.9 },
+                { time: 520,  pitch: 110, vol: 0.65, intensity: 1.1 },
+                { time: 720,  pitch: 135, vol: 1.0,  intensity: 1.8 }
+            ];
+
+            let colorIndex = 0;
+
+            function playMeasure() {
+                pattern.forEach((beat) => {
+                    setTimeout(() => {
+                        playDrumHit(beat.pitch, 0.28, beat.vol);
+                        
+                        // En los golpes fuertes cambiamos al siguiente color vibrante
+                        if (beat.intensity >= 1.4) {
+                            colorIndex = (colorIndex + 1) % nikaColors.length;
+                        }
+                        
+                        const activeColor = nikaColors[colorIndex];
+                        triggerVisualPulse(activeColor, beat.intensity);
+
+                        // Destello extra en el remate final del compás
+                        if (beat.time === 720) {
+                            setTimeout(() => {
+                                body.style.background = '#050505';
+                            }, 280);
+                        }
+                    }, beat.time);
+                });
+            }
+
+            // Ejecutar inmediatamente y repetir en bucle
+            playMeasure();
+            drumLoopTimer = setInterval(playMeasure, 1250);
+        }
+
+        // Evento al hacer clic/tocar la fruta
+        fruitContainer.addEventListener('click', () => {
+            clickCount++;
+
+            if (!isLiberated) {
+                const randomColor = nikaColors[(clickCount - 1) % nikaColors.length];
+                
+                if (clickCount < 5) {
+                    // Golpe individual de tambor por cada toque previo
+                    playDrumHit(100 + clickCount * 8, 0.25, 0.75);
+                    triggerVisualPulse(randomColor, 1 + clickCount * 0.15);
+                    statusText.textContent = `Latidos detectados (${clickCount} / 5)`;
+                } else if (clickCount === 5) {
+                    // ¡5to clic: Despertar!
+                    startDrumsOfLiberation();
+                }
+            } else {
+                // Si ya está sonando, cada clic extra lanza un pulso extra de Haki blanco
+                playDrumHit(150, 0.3, 1.0);
+                triggerVisualPulse({ bg: '#2e1065', glow: '#ffffff' }, 2.0);
+            }
+        });
+    </script>
+</body>
+</html>
